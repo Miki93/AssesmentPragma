@@ -1,5 +1,5 @@
 # 🎮 Plataforma API – Torneo de Videojuegos  
-Arquitectura Serverless • AWS • DDD • BDD • TDD • DevOps • DynamoDB  
+Arquitectura Serverless en AWS
 
 ---
 
@@ -16,8 +16,7 @@ Todo construido con una arquitectura basada en **AWS Lambda, API Gateway, Dynamo
 ---
 
 # 🏛️ 2. Arquitectura (Serverless + AWS)
-![Arquitectura](./diagramas/diagrama-API-AWS.png)
-
+![Arquitectura API](./torneovideojuegos.drawio.svg)
 > Arquitectura serverless con API Gateway → Lambda → DynamoDB, con seguridad IAM SigV4 y monitoreo CloudWatch.
 
 ---
@@ -32,17 +31,11 @@ El proyecto está dividido en **4 Bounded Contexts**:
 | **Vistas** | Registrar vista, unirse, consultar | /views |
 | **Usuarios** | Registrar, consultar | /users |
 
-📌 **Diagrama DDD**  
-![DDD](./diagramas/ddd-context-map.png)
 
 ---
 
 # 🧪 4. Behavior Driven Development (BDD)
 Los comportamientos del sistema están definidos en archivos `.feature`:
 
-```gherkin
-Escenario: Obtener un torneo por su ID
-Dado que existe un torneo con un ID válido
-Cuando el cliente realiza un GET a /tournaments/{id}
-Entonces la API devuelve los datos correctamente
+![Arquitectura API](./torneo.feature)
 
