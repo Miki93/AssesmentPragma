@@ -102,4 +102,4 @@ El proyecto implementa **TDD (Test Driven Development)**:
 
 # 🟪 9. Autor
 **Miguel**  
-Arquitectura • Backend • DevOps • Serverless • AWS  
+Desarrollador de Integración - PRAGMA
