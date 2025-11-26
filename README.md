@@ -37,5 +37,6 @@ El proyecto está dividido en **4 Bounded Contexts**:
 # 🧪 4. Behavior Driven Development (BDD)
 Los comportamientos del sistema están definidos en archivos `.feature`:
 
-![Arquitectura API](./torneo.feature)
+[🧪 Archivo BDD – tournament.feature](./tournament.feature)
+
 
