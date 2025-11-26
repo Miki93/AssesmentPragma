@@ -36,7 +36,7 @@ El proyecto está dividido en **4 Bounded Contexts**:
 
 ---
 
-# 🧪 4. Behavior Driven Development (BDD)
+# 🟪 4. Behavior Driven Development (BDD)
 Los comportamientos del sistema están definidos mediante archivos `.feature` usando lenguaje Gherkin (Dado–Cuando–Entonces):
 
 📄 **Archivo BDD:**  
@@ -50,7 +50,8 @@ Dado que existe un torneo con un ID válido
 Cuando el cliente realiza un GET a /tournaments/{id}
 Entonces la API responde con estado 200
 
-📄 5. Contrato de la API (OpenAPI – YAML)
+
+# 🟪 5. Contrato de la API (OpenAPI – YAML)
 
 El contrato completo de la API está definido con OpenAPI 3.0, documentando:
 
@@ -69,7 +70,7 @@ Las 15 operaciones del dominio
 📘 Contrato OpenAPI:
 👉 tomeovideojuegos.yaml
 
-🗂️ 6. Modelo de Base de Datos (DynamoDB)
+# 🟪 6. Modelo de Base de Datos (DynamoDB)
 
 El diseño de la base de datos está representado en el siguiente diagrama:
 
@@ -88,7 +89,7 @@ Users
 
 Organizadas según los bounded contexts del modelo DDD.
 
-🛠️ 7. Tecnologías Utilizadas
+# 🟪 7. Tecnologías Utilizadas
 
 AWS Lambda (lógica de negocio serverless)
 
@@ -108,7 +109,7 @@ Gherkin (BDD)
 
 GitHub (control de versiones)
 
-🧪 8. Pruebas Unitarias (TDD)
+# 🟪 8. Pruebas Unitarias (TDD)
 
 El proyecto implementa TDD (Test Driven Development):
 
@@ -128,7 +129,6 @@ it("debe crear un torneo correctamente", () => {
 
 Esto asegura calidad, estabilidad y mantenibilidad en las funciones Lambda.
 
-👤 9. Autor
+# 🟪 9. Autor
 
-Miguel
-Arquitectura • Backend • DevOps • Serverless • AWS
+Miguel Rojas  - PRAGMA
