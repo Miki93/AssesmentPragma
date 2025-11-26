@@ -1,0 +1,300 @@
+openapi: 3.0.3
+info:
+  title: Tournament Platform API
+  version: 1.0.0
+  description: API para la plataforma de gestión de torneos.
+
+servers:
+  - url: https://api.example.com
+
+tags:
+  - name: Tournaments
+  - name: Tickets
+  - name: Views
+  - name: Notifications
+  - name: Users
+
+paths:
+
+  /tournaments:
+    get:
+      tags: [Tournaments]
+      summary: Listar torneos
+      parameters:
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: gameType
+          schema: { type: string }
+        - in: query
+          name: status
+          schema: { type: string }
+      responses:
+        "200": { description: Lista de torneos. }
+
+    post:
+      tags: [Tournaments]
+      summary: Crear torneo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - organizerId
+                - name
+                - description
+                - categoryCode
+                - gameTypeCode
+                - startDate
+                - endDate
+                - isFree
+              properties:
+                organizerId: { type: string }
+                name: { type: string }
+                description: { type: string }
+                categoryCode: { type: string }
+                gameTypeCode: { type: string }
+                startDate: { type: string, format: date-time }
+                endDate: { type: string, format: date-time }
+                isFree: { type: boolean }
+                ticketPrice: { type: number, nullable: true }
+                maxParticipants: { type: integer }
+                maxViewers: { type: integer }
+      responses:
+        "201": { description: Torneo creado. }
+
+  /tournaments/{tournamentId}:
+    get:
+      tags: [Tournaments]
+      summary: Obtener torneo por ID
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Información del torneo. }
+        "404": { description: No encontrado. }
+
+    delete:
+      tags: [Tournaments]
+      summary: Eliminar torneo
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Torneo eliminado. }
+
+  /tournaments/{tournamentId}/publish:
+    post:
+      tags: [Tournaments]
+      summary: Publicar torneo
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Torneo publicado. }
+
+  /tournaments/{tournamentId}/subadmins:
+    post:
+      tags: [Tournaments]
+      summary: Registrar subadministradores del torneo
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - subadmins
+              properties:
+                subadmins:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200": { description: Subadministradores asignados. }
+
+  /tournaments/{tournamentId}/tickets:
+    post:
+      tags: [Tickets]
+      summary: Vender ticket
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - type
+              properties:
+                userId: { type: string }
+                type:
+                  type: string
+                  enum: [participant, viewer]
+      responses:
+        "201": { description: Ticket vendido. }
+
+  /tickets/{ticketId}:
+    get:
+      tags: [Tickets]
+      summary: Obtener ticket
+      parameters:
+        - in: path
+          name: ticketId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Ticket encontrado. }
+        "404": { description: No encontrado. }
+
+  /tickets/{ticketId}/validate:
+    post:
+      tags: [Tickets]
+      summary: Validar ticket
+      parameters:
+        - in: path
+          name: ticketId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Ticket válido. }
+        "400": { description: Ticket inválido. }
+
+  /tournaments/{tournamentId}/views:
+    post:
+      tags: [Views]
+      summary: Crear evento de vista
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - platform
+                - url
+              properties:
+                platform: { type: string }
+                url: { type: string }
+                isFree: { type: boolean }
+                price: { type: number, nullable: true }
+      responses:
+        "201": { description: Evento creado. }
+
+    get:
+      tags: [Views]
+      summary: Listar eventos de vista del torneo
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Lista de eventos. }
+
+  /views/{viewId}/join:
+    post:
+      tags: [Views]
+      summary: Registrar usuario en un evento de vista
+      parameters:
+        - in: path
+          name: viewId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+              properties:
+                userId: { type: string }
+      responses:
+        "200": { description: Registro correcto. }
+
+  /tournaments/{tournamentId}/notifications:
+    post:
+      tags: [Notifications]
+      summary: Enviar notificación masiva
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+                - target
+              properties:
+                message: { type: string }
+                target:
+                  type: string
+                  enum: [participants, viewers, all]
+      responses:
+        "200": { description: Notificación enviada. }
+
+  /users:
+    post:
+      tags: [Users]
+      summary: Registrar usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - type
+              properties:
+                name: { type: string }
+                email: { type: string }
+                type:
+                  type: string
+                  enum: [organizer, viewer, admin]
+      responses:
+        "201": { description: Usuario creado. }
+
+  /users/{userId}:
+    get:
+      tags: [Users]
+      summary: Obtener usuario
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Usuario encontrado. }
+        "404": { description: Usuario no encontrado. }
